@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Records — AI를 바꿀 때마다 나를 다시 설명하지 마세요</title>
+  <meta name="description" content="ChatGPT, Claude, Gemini를 위한 하나의 개인 메모리 허브를 만들고 있어요. Private Records의 출시 알림을 받아보세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Private Records — AI를 바꿀 때마다 나를 다시 설명하지 마세요">
+  <meta property="og:description" content="모든 AI를 위한 하나의 메모리. 흩어진 대화와 기록을 연결할 Private Records, 현재 개발 중입니다.">
+  <meta property="og:image" content="https://asasds145.github.io/private-records-landing/og.png">
+  <meta property="og:url" content="https://asasds145.github.io/private-records-landing/">
+  <meta name="twitter:image" content="https://asasds145.github.io/private-records-landing/og.png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#090b14">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b14;
+      --text: #f2f1fa;
+      --muted: #a4a7bb;
+      --violet: #b29aff;
+      --line: rgba(190, 181, 235, .14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 78% 32%, #21173955, transparent 48%), var(--bg);
+      color: var(--text);
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    .shell { max-width: 1160px; margin: auto; padding: 0 28px; }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 100px;
+      border-bottom: 1px solid var(--line);
+    }
+    .logo { font-size: 18px; font-weight: 700; letter-spacing: -.6px; }
+    .badge {
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #c2b9dc;
+      font-size: 11px;
+      white-space: nowrap;
+      background: #ffffff03;
+    }
+    .badge::before {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      margin-right: 7px;
+      border-radius: 50%;
+      background: var(--violet);
+    }
+    main { padding: 58px 0 52px; }
+    .hero { display: grid; gap: 8px; align-items: center; }
+    .eyebrow {
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2.3px;
+      margin: 0 0 23px;
+    }
+    h1 {
+      max-width: 650px;
+      margin: 0;
+      font-size: clamp(36px, 5vw, 57px);
+      line-height: 1.24;
+      letter-spacing: -2.4px;
+      word-break: keep-all;
+      text-wrap: balance;
+    }
+    .intro {
+      max-width: 530px;
+      margin: 25px 0 0;
+      color: #b7b8ca;
+      font-size: 16px;
+      line-height: 1.9;
+      word-break: keep-all;
+    }
+    .english { margin: 14px 0 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .network { margin: 10px -16px; position: relative; }
+    .network svg { display: block; width: 100%; height: auto; max-height: 360px; }
+    .benefits {
+      display: grid;
+      gap: 26px;
+      list-style: none;
+      padding: 29px 0;
+      margin: 12px 0 32px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .benefits li { display: flex; align-items: flex-start; gap: 14px; }
+    .icon {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      padding: 7px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #b29aff08;
+      color: var(--violet);
+    }
+    .benefits h2 { font-size: 16px; letter-spacing: -.3px; margin: 2px 0 8px; }
+    .benefits p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.85; word-break: keep-all; }
+    .waitlist { max-width: 600px; margin: auto; }
+    .form-label { display: block; margin-bottom: 12px; font-size: 15px; color: #ded9ee; }
+    .form-row { display: flex; flex-direction: column; gap: 10px; }
+    input[type="email"] {
+      width: 100%;
+      min-width: 0;
+      height: 54px;
+      padding: 0 17px;
+      border: 1px solid #353348;
+      border-radius: 10px;
+      background: #11131e;
+      color: var(--text);
+      outline: none;
+    }
+    input::placeholder { color: #85869c; }
+    input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px #b29aff20; }
+    button {
+      min-height: 54px;
+      padding: 0 23px;
+      border: 1px solid #d0bfff;
+      border-radius: 10px;
+      background: #c4afff;
+      color: #201138;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, transform .2s;
+    }
+    button:hover { background: #d2c2ff; transform: translateY(-1px); }
+    button:focus-visible { outline: 3px solid #eee6ff; outline-offset: 4px; }
+    button:disabled { cursor: wait; opacity: .65; transform: none; }
+    .helper { margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; text-align: center; }
+    .status { min-height: 22px; margin: 12px 0 0; font-size: 13px; line-height: 1.7; text-align: center; }
+    .status[data-state="success"] { color: #91e4bc; }
+    .status[data-state="error"] { color: #ffb6bb; }
+    .honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 24px 0 30px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.8;
+    }
+    .footer-note { color: #b4a7cf; }
+    @media (min-width: 600px) {
+      .form-row { flex-direction: row; }
+      footer { font-size: 11px; }
+    }
+    @media (min-width: 900px) {
+      main { padding-top: 78px; }
+      .hero { grid-template-columns: 1.2fr 1fr; gap: 20px; }
+      .network { margin: 0 -25px 0 -15px; }
+      .network svg { max-height: none; }
+      .benefits { grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 52px; padding: 30px 0; }
+      .waitlist { margin-top: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="logo">Private Records<span style="color:var(--violet)">.</span></div>
+      <span class="badge">출시 예정 · Coming soon</span>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">YOUR MEMORY, CONNECTED.</p>
+          <h1 id="hero-title">AI를 바꿀 때마다 나를 다시 설명하지 마세요</h1>
+          <p class="intro">ChatGPT, Claude, Gemini가 하나의 메모리를 공유합니다. 흩어진 대화와 기록을 한곳에 모아, 시간이 지날수록 당신의 지식이 복리로 쌓이도록 만들고 있어요.</p>
+          <p class="english" lang="en">One memory for every AI you use. Coming soon.</p>
+        </div>
+        <figure class="network" aria-label="세 개의 AI 노드가 하나의 개인 메모리 허브로 연결되는 개념도">
+          <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="halo">
+                <stop stop-color="#9462ff" stop-opacity=".24"/>
+                <stop offset="1" stop-color="#9462ff" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="hub" x2="1" y2="1">
+                <stop stop-color="#34234e"/><stop offset="1" stop-color="#171525"/>
+              </linearGradient>
+              <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="5"/>
+              </filter>
+              <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r=".7" fill="#b3a4e1" opacity=".18"/>
+              </pattern>
+            </defs>
+            <rect x="35" y="25" width="410" height="330" fill="url(#dots)"/>
+            <circle cx="240" cy="197" r="167" fill="url(#halo)"/>
+            <g fill="none" stroke="#a791d5">
+              <circle cx="240" cy="197" r="85" opacity=".12"/>
+              <circle cx="240" cy="197" r="139" opacity=".1" stroke-dasharray="3 7"/>
+              <path d="M109 109L240 197L376 112M240 197L299 319" opacity=".35"/>
+              <path d="M109 109L376 112L299 319Z" opacity=".08"/>
+            </g>
+            <g fill="#bd9bff">
+              <circle cx="240" cy="197" r="41" opacity=".35" filter="url(#glow)"/>
+              <circle cx="173" cy="152" r="2.5"/>
+              <circle cx="309" cy="154" r="2.5"/>
+              <circle cx="270" cy="259" r="2.5"/>
+            </g>
+            <rect x="201" y="158" width="78" height="78" rx="23" fill="url(#hub)" stroke="#b18ce4" stroke-opacity=".65"/>
+            <g fill="none" stroke="#d4baff" stroke-width="1.6">
+              <path d="M240 177L258 187L240 197L222 187Z"/>
+              <path d="M222 197L240 207L258 197M222 207L240 217L258 207" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g>
+              <circle cx="109" cy="109" r="26" fill="#102322" stroke="#5fd5a6" stroke-opacity=".4"/>
+              <circle cx="109" cy="109" r="8" fill="#71dfb5"/>
+              <circle cx="109" cy="109" r="13" fill="none" stroke="#71dfb5" stroke-opacity=".2"/>
+              <circle cx="376" cy="112" r="26" fill="#2c211e" stroke="#eda579" stroke-opacity=".4"/>
+              <circle cx="376" cy="112" r="8" fill="#efa77d"/>
+              <circle cx="376" cy="112" r="13" fill="none" stroke="#efa77d" stroke-opacity=".2"/>
+              <circle cx="299" cy="319" r="26" fill="#17243b" stroke="#7cafff" stroke-opacity=".4"/>
+              <circle cx="299" cy="319" r="8" fill="#85b0ff"/>
+              <circle cx="299" cy="319" r="13" fill="none" stroke="#85b0ff" stroke-opacity=".2"/>
+            </g>
+            <text x="240" y="265" text-anchor="middle" fill="#baabd5" font-size="9" letter-spacing="2" font-family="sans-serif">ONE PERSONAL MEMORY</text>
+          </svg>
+        </figure>
+      </section>
+      <ul class="benefits">
+        <li>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="19" r="2"/>
+            <path d="M7 6h10M6 8l5 9M18 8l-5 9"/>
+          </svg>
+          <div><h2>한 번 말하면 모든 AI가 기억</h2><p>Claude에게 한 이야기를 ChatGPT도, Gemini도 알게 하는 것이 목표입니다.</p></div>
+        </li>
+        <li>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V4h8v5M9 14h6M12 4v5"/>
+          </svg>
+          <div><h2>흩어진 기록을 한곳에</h2><p>여러 AI에 파편화된 메모리와 기록을 하나의 개인 허브로 모읍니다.</p></div>
+        </li>
+        <li>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M4 19h16M6 15l5-5 4 2 5-7M15 5h5v5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div><h2>시간이 지날수록 쌓이는 지식</h2><p>쓸수록 맥락이 연결되고, 당신의 지식이 복리로 축적됩니다.</p></div>
+        </li>
+      </ul>
+      <section class="waitlist" aria-label="출시 알림 신청">
+        <form id="waitlist-form">
+          <label class="form-label" for="email">새로운 메모리의 시작, 출시 소식을 받아보세요.</label>
+          <div class="form-row">
+            <input id="email" name="email" type="email" placeholder="이메일 주소" autocomplete="email" inputmode="email" maxlength="254" required aria-describedby="helper status">
+            <button id="submit-button" type="submit">출시 알림 받기</button>
+          </div>
+          <div class="honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <p class="helper" id="helper">출시 소식만 보내드려요. 스팸은 없습니다.</p>
+          <p class="status" id="status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <noscript><p class="helper">출시 알림 신청을 위해 JavaScript를 활성화해 주세요.</p></noscript>
+        </form>
+      </section>
+    </main>
+    <footer>
+      <span>© 2026 Private Records · 현재 개발 중인 서비스입니다.</span>
+      <span class="footer-note">Built around you.</span>
+    </footer>
+  </div>
+  <script>
+    (() => {
+      "use strict";
+      const params = new URLSearchParams(location.search);
+      const utm = Object.fromEntries(
+        ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
+          .map(key => [key, params.get(key) || ""])
+      );
+      const form = document.getElementById("waitlist-form");
+      const email = document.getElementById("email");
+      const button = document.getElementById("submit-button");
+      const status = document.getElementById("status");
+      const success = "등록되었어요! 출시되면 가장 먼저 알려드릴게요.";
+      const failure = "잠시 문제가 생겼어요. 다시 시도해 주세요.";
+      const show = (message, state) => {
+        status.textContent = message;
+        status.dataset.state = state;
+      };
+      const configPromise = (async () => {
+        const response = await fetch("config.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("Configuration unavailable");
+        const config = await response.json();
+        if (typeof config.ntfy_topic !== "string" ||
+            !/^[A-Za-z0-9_-]+$/.test(config.ntfy_topic) ||
+            typeof config.public_key_spki_b64 !== "string" ||
+            !config.public_key_spki_b64.trim()) throw new Error("Invalid configuration");
+        return { url: "https://ntfy.sh/" + config.ntfy_topic, key: config.public_key_spki_b64 };
+      })().catch(() => null);
+
+      configPromise.then(config => {
+        if (!config) return;
+        fetch(config.url, {
+          method: "POST",
+          body: JSON.stringify({
+            type: "view", ...utm, referrer: document.referrer, ts: new Date().toISOString()
+          }),
+          keepalive: true
+        }).catch(() => {});
+      });
+
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        if (button.disabled) return;
+        email.value = email.value.trim();
+        if (!form.reportValidity()) return;
+        if (form.elements.website.value) {
+          show(success, "success");
+          form.reset();
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "등록 중…";
+        form.setAttribute("aria-busy", "true");
+        show("", "");
+        let timeout;
+        try {
+          const config = await configPromise;
+          if (!config || !globalThis.crypto?.subtle) throw new Error("Unavailable");
+          const spki = Uint8Array.from(atob(config.key.replace(/\s/g, "")), c => c.charCodeAt(0));
+          const key = await crypto.subtle.importKey(
+            "spki", spki, { name: "RSA-OAEP", hash: "SHA-256" }, false, ["encrypt"]
+          );
+          const encrypted = await crypto.subtle.encrypt(
+            { name: "RSA-OAEP" }, key, new TextEncoder().encode(email.value)
+          );
+          const email_enc = btoa(String.fromCharCode(...new Uint8Array(encrypted)));
+          const controller = new AbortController();
+          timeout = setTimeout(() => controller.abort(), 15000);
+          const response = await fetch(config.url, {
+            method: "POST",
+            signal: controller.signal,
+            body: JSON.stringify({
+              type: "signup", email_enc, ...utm,
+              referrer: document.referrer, page: location.href, ts: new Date().toISOString()
+            })
+          });
+          if (!response.ok) throw new Error("Signup failed");
+          show(success, "success");
+          form.reset();
+        } catch {
+          show(failure, "error");
+        } finally {
+          clearTimeout(timeout);
+          button.disabled = false;
+          button.textContent = "출시 알림 받기";
+          form.removeAttribute("aria-busy");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
